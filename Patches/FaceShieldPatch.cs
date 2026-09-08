@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using SPT.Reflection.Patching;
 using UnityEngine;
 using VisorEffectManager;
@@ -8,9 +8,12 @@ namespace VisorEffectManager.Patches
     internal class FaceShieldPatch : ModulePatch
     {
 
+        // SPT 4.1 deobfuscated the client: VisorEffect.method_2 is now SetDefault().
+        // It is the method that assigns all five visor textures, so a postfix here is
+        // still exactly the right place to null the ones the user turned off.
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(VisorEffect).GetMethod("method_2", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            return typeof(VisorEffect).GetMethod(nameof(VisorEffect.SetDefault), BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
         }
 
         [PatchPostfix]
@@ -25,8 +28,8 @@ namespace VisorEffectManager.Patches
                     return;
                 }
 
-                // Obtém o material
-                Material material = __instance.method_4();
+                // Obtém o material  (4.0: method_4)
+                Material material = __instance.GetMaterial();
 
                 // Verifica se o material é válido antes de aplicar configurações
                 if (material == null)

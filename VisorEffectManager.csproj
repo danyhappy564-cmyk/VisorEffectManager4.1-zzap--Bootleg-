@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
@@ -8,85 +8,85 @@
 		<OutputType>Library</OutputType>
 		<RootNamespace>VisorEffectManager</RootNamespace>
 		<AssemblyName>VisorEffectManager</AssemblyName>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<TarkovDir Condition=" '$(TarkovDir)' == '' ">D:\GAMES\SPT-4.0.2_MODDING\</TarkovDir>
-		<TarkovPluginsSPTDir>$(TarkovDir)BepInEx\plugins\spt\</TarkovPluginsSPTDir>
-		<TarkovManagedDir>$(TarkovDir)EscapeFromTarkov_Data\Managed\</TarkovManagedDir>
-		<TarkovBepInExCoreDir>$(TarkovDir)BepInEx\core\</TarkovBepInExCoreDir>
-		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- BepInEx Core -->
 		<Reference Include="0Harmony">
-			<HintPath>$(TarkovBepInExCoreDir)0Harmony.dll</HintPath>
+			<HintPath>$(SptBepInEx)\core\0Harmony.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="BepInEx">
-			<HintPath>$(TarkovBepInExCoreDir)BepInEx.dll</HintPath>
+			<HintPath>$(SptBepInEx)\core\BepInEx.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 
 		<!-- SPT -->
 		<Reference Include="spt-reflection">
-			<HintPath>$(TarkovPluginsSPTDir)spt-reflection.dll</HintPath>
+			<HintPath>$(SptBepInEx)\plugins\spt\spt-reflection.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="spt-common">
-			<HintPath>$(TarkovPluginsSPTDir)spt-common.dll</HintPath>
+			<HintPath>$(SptBepInEx)\plugins\spt\spt-common.dll</HintPath>
 		</Reference>
 
 		<!-- Tarkov Game -->
 		<Reference Include="Assembly-CSharp">
-			<HintPath>$(TarkovManagedDir)Assembly-CSharp.dll</HintPath>
+			<HintPath>$(SptManaged)\Assembly-CSharp.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Comfort">
-			<HintPath>$(TarkovManagedDir)Comfort.dll</HintPath>
+			<HintPath>$(SptManaged)\Comfort.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Comfort.Unity">
-			<HintPath>$(TarkovManagedDir)Comfort.Unity.dll</HintPath>
+			<HintPath>$(SptManaged)\Comfort.Unity.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
 			<SpecificVersion>False</SpecificVersion>
-			<HintPath>$(TarkovManagedDir)Newtonsoft.Json.dll</HintPath>
+			<HintPath>$(SptManaged)\Newtonsoft.Json.dll</HintPath>
 		</Reference>
 
 		<!-- Unity -->
 		<Reference Include="UnityEngine">
-			<HintPath>$(TarkovManagedDir)UnityEngine.dll</HintPath>
+			<HintPath>$(SptManaged)\UnityEngine.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>$(TarkovManagedDir)UnityEngine.CoreModule.dll</HintPath>
+			<HintPath>$(SptManaged)\UnityEngine.CoreModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
-			<HintPath>$(TarkovManagedDir)UnityEngine.UI.dll</HintPath>
+			<HintPath>$(SptManaged)\UnityEngine.UI.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Sirenix.Serialization">
-			<HintPath>$(TarkovManagedDir)Sirenix.Serialization.dll</HintPath>
+			<HintPath>$(SptManaged)\Sirenix.Serialization.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Unity.TextMeshPro">
-			<HintPath>$(TarkovManagedDir)Unity.TextMeshPro.dll</HintPath>
+			<HintPath>$(SptManaged)\Unity.TextMeshPro.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.InputLegacyModule">
-			<HintPath>$(TarkovManagedDir)UnityEngine.InputLegacyModule.dll</HintPath>
+			<HintPath>$(SptManaged)\UnityEngine.InputLegacyModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="PhysicsModule">
-			<HintPath>$(TarkovManagedDir)UnityEngine.PhysicsModule.dll</HintPath>
+			<HintPath>$(SptManaged)\UnityEngine.PhysicsModule.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+
+	<!-- Drop the built plugin straight into BepInEx\plugins. -->
+	<Target Name="DeployToSpt" AfterTargets="Build" Condition=" '$(DeployToSpt)' != 'false' AND Exists('$(SptBepInEx)') ">
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SptBepInEx)\plugins" />
+		<Message Importance="high" Text="Deployed $(TargetFileName) to $(SptBepInEx)\plugins" />
+	</Target>
+
 </Project>
 
 
