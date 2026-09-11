@@ -1,3 +1,19 @@
+### ⚠️ IMPORTANT NOTICE / DISCLAIMER
+
+**Original Author:** silviohmartins
+**Original Repository:** VisorEffectManager
+**Original Link:** https://github.com/silviohmartins/VisorEffectManager
+**License:** MIT
+**This Port By:** R_F (danyhappy564-cmyk) — unofficial, AI-assisted port. Not affiliated with or endorsed by the original author.
+
+1. **Reflection & Take-Downs:** I deeply reflect on the ECOT incident. As an AI-assisted "vibe coder," I will immediately delete files if the original authors ask.
+2. **No Re-Distribution:** These ported builds are unverified, temporary fixes. Please do NOT re-upload or share them anywhere else.
+3. **Do Not Pester Original Authors:** Never report bugs or pester original modders regarding issues from my unofficial ports.
+4. **Full Credit & Respect:** I will always credit original creators on GitHub and prioritize their decisions above all else.
+5. **Support Original Creators:** Instead of using my ports, please visit the original authors' Forge pages to leave kind words or tips.
+
+---
+
 # VisorEffectManager 4.1
 
 바이저(안면보호구) 착용 시 화면에 끼는 시각 효과를 끄는 BepInEx 플러그인. **SPT 4.1.5** 용으로 포팅했습니다.
